@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ખંડેવાળ પ્રાથમિક શાળા - ગુજરાતી વાંચન-લેખન અને અર્થગ્રહણ</title>
+
+  <!-- PWA અને એપ ઇન્સ્ટોલ આઇકોન સેટિંગ્સ -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="fln-icon.png">
+  <link rel="apple-touch-icon" href="fln-icon.png">
+  <meta name="theme-color" content="#1e1b4b">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <style>
+    :root {
+      --btn-green: #10b981;
+      --btn-green-shadow: #047857;
+      --btn-blue: #0284c7;
+      --btn-blue-shadow: #0369a1;
+      --btn-orange: #f97316;
+      --btn-orange-shadow: #c2410c;
+      --btn-purple: #8b5cf6;
+      --btn-purple-shadow: #6d28d9;
+      --btn-rose: #f43f5e;
+      --btn-rose-shadow: #be123c;
+      --btn-amber: #eab308;
+      --btn-amber-shadow: #a16207;
+      --card: #ffffff;
+      --text: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Gujarati", sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    body {
+      background: #1e293b;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px;
+    }
+
+    /* મુખ્ય કન્ટેનર */
+    .app-wrapper {
+      width: 100%;
+      max-width: 950px;
+      background: var(--card);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+
+    /* હેડર લેઆઉટ */
+    header {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      border-bottom: 4px solid #f59e0b;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+    }
+
+    .header-icon-box {
+      width: 60px;
+      height: 60px;
+      background: #ffffff;
+      border: 3px solid #f59e0b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      overflow: hidden;
+      padding: 2px;
+    }
+
+    .header-icon-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .header-center {
+      text-align: center;
+      flex: 1;
+      padding: 0 10px;
+    }
+
+    .motto {
+      color: #fbbf24;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .school-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-top: 1px;
+    }
+
+    .app-subtitle {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+
+    /* નેવિગેશન બાર */
+    .nav-bar {
+      background: #f1f5f9;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #cbd5e1;
+    }
+
+    .btn-3d {
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.1s ease-in-out;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-3d:active {
+      transform: translateY(3px);
+    }
+
+    .btn-nav {
+      background: #e2e8f0;
+      color: #1e293b;
+      padding: 7px 16px;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 0 #94a3b8;
+    }
+    .btn-nav:active {
+      box-shadow: 0 0 0 #94a3b8;
+    }
+
+    .btn-skip {
+      background: #fbbf24;
+      color: #78350f;
+      padding: 7px 16px;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 0 #d97706;
+    }
+    .btn-skip:active {
+      box-shadow: 0 0 0 #d97706;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #3b82f6);
+      transition: width 0.3s;
+    }
+
+    .main-body {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* હોમ પેજ લેઆઉટ */
+    .desktop-home {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* નવું આકર્ષક વેલકમ બેનર (FLN લોગો સાથે) */
+    .welcome-banner {
+      background: linear-gradient(135deg, #eef2ff, #fdf4ff);
+      border: 2px dashed #818cf8;
+      border-radius: 16px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+    }
+
+    .welcome-logo-badge {
+      width: 82px;
+      height: 82px;
+      flex-shrink: 0;
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 4px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      border: 2px solid #fbbf24;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .welcome-logo-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .welcome-text-box h2 {
+      font-size: 1.25rem;
+      color: #1e1b4b;
+      margin-bottom: 2px;
+    }
+    .welcome-text-box p {
+      font-size: 0.9rem;
+      color: #4338ca;
+      font-weight: 600;
+    }
+
+    .home-top-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .hero-btn {
+      padding: 14px 18px;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      color: white;
+    }
+
+    .btn-hero-green {
+      background: var(--btn-green);
+      box-shadow: 0 5px 0 var(--btn-green-shadow);
+    }
+    .btn-hero-green:active {
+      box-shadow: 0 1px 0 var(--btn-green-shadow);
+      background: #059669;
+    }
+
+    .btn-hero-blue {
+      background: var(--btn-blue);
+      box-shadow: 0 5px 0 var(--btn-blue-shadow);
+    }
+    .btn-hero-blue:active {
+      box-shadow: 0 1px 0 var(--btn-blue-shadow);
+      background: #0284c7;
+    }
+
+    /* લેવલ્સ 3x2 ગ્રીડ */
+    .desktop-level-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      width: 100%;
+    }
+
+    .level-card-3d {
+      padding: 14px 14px;
+      border-radius: 14px;
+      color: white;
+      text-align: left;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.1s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 95px;
+    }
+    .level-card-3d:active {
+      transform: translateY(3px);
+    }
+
+    .c-green  { background: var(--btn-green); box-shadow: 0 5px 0 var(--btn-green-shadow); }
+    .c-green:active { box-shadow: 0 1px 0 var(--btn-green-shadow); }
+    .c-blue   { background: var(--btn-blue); box-shadow: 0 5px 0 var(--btn-blue-shadow); }
+    .c-blue:active { box-shadow: 0 1px 0 var(--btn-blue-shadow); }
+    .c-orange { background: var(--btn-orange); box-shadow: 0 5px 0 var(--btn-orange-shadow); }
+    .c-orange:active { box-shadow: 0 1px 0 var(--btn-orange-shadow); }
+    .c-purple { background: var(--btn-purple); box-shadow: 0 5px 0 var(--btn-purple-shadow); }
+    .c-purple:active { box-shadow: 0 1px 0 var(--btn-purple-shadow); }
+    .c-rose   { background: var(--btn-rose); box-shadow: 0 5px 0 var(--btn-rose-shadow); }
+    .c-rose:active { box-shadow: 0 1px 0 var(--btn-rose-shadow); }
+    .c-amber  { background: var(--btn-amber); box-shadow: 0 5px 0 var(--btn-amber-shadow); color: #78350f; }
+    .c-amber:active { box-shadow: 0 1px 0 var(--btn-amber-shadow); }
+
+    .level-card-3d h4 { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
+    .level-card-3d p { font-size: 0.82rem; opacity: 0.95; line-height: 1.3; }
+
+    /* પ્રવૃત્તિ સ્ક્રીન */
+    .game-box {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .audio-play-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 5px 0 #0284c7;
+      color: white;
+      font-size: 1.8rem;
+      border: none;
+      cursor: pointer;
+      margin: 10px 0;
+      transition: all 0.1s;
+    }
+    .audio-play-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #0284c7;
+    }
+
+    .display-word-target {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #1e1b4b;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .word-drop-slots {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      min-height: 58px;
+    }
+
+    .slot-box {
+      width: 52px;
+      height: 58px;
+      border-bottom: 4px solid #4f46e5;
+      background: #f1f5f9;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .letter-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      max-width: 600px;
+    }
+
+    .letter-3d-btn {
+      width: 58px;
+      height: 58px;
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #1e293b;
+      box-shadow: 0 4px 0 #94a3b8;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .letter-3d-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #94a3b8;
+    }
+    .letter-3d-btn.disabled {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .sentence-btn {
+      padding: 10px 18px;
+      background: white;
+      border: 2px solid #94a3b8;
+      border-radius: 12px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1e293b;
+      box-shadow: 0 4px 0 #94a3b8;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .sentence-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #94a3b8;
+    }
+
+    /* અર્થગ્રહણ લેઆઉટ */
+    .passage-card {
+      background: #fffbeb;
+      border: 2px solid #fde68a;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: left;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: #78350f;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    .passage-listen-btn {
+      float: right;
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #92400e;
+    }
+
+    .question-wrapper {
+      width: 100%;
+      text-align: left;
+    }
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 12px;
+    }
+
+    .options-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .option-3d-btn {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      color: #1e293b;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #94a3b8;
+      transition: all 0.1s;
+    }
+    .option-3d-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #94a3b8;
+    }
+    .option-3d-btn.correct {
+      background: #dcfce7 !important;
+      border-color: #22c55e !important;
+      color: #15803d !important;
+      box-shadow: 0 4px 0 #16a34a !important;
+    }
+    .option-3d-btn.wrong {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+      box-shadow: 0 4px 0 #dc2626 !important;
+    }
+
+    .feedback-banner {
+      margin-top: 14px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      min-height: 28px;
+    }
+
+    /* અંગ્રેજી ફૂટર */
+    footer {
+      background: linear-gradient(135deg, #09090b, #1e1b4b);
+      border-top: 3px solid #f59e0b;
+      color: #f8fafc;
+      padding: 10px 16px;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    .footer-line-1 {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fbbf24;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .footer-line-1 a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 800;
+    }
+    .footer-line-2 {
+      color: #94a3b8;
+      font-size: 0.78rem;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-level-grid { grid-template-columns: 1fr; }
+      .home-top-row { grid-template-columns: 1fr; }
+      .welcome-banner { flex-direction: column; text-align: center; }
+      .welcome-logo-badge { width: 70px; height: 70px; }
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;">
+
+  <div class="app-wrapper">
+    <!-- હેડર (૧૦૦૦૭૨૯૮૬૦.png અને ૧૦૦૦૭૨૯૮૬૧.png સાથે) -->
+    <header>
+      <div class="header-icon-box" title="ખંડેવાળ પ્રાથમિક શાળા">
+        <img src="1000729860.png" alt="ખંડેવાળ પ્રાથમિક શાળા લોગો">
+      </div>
+
+      <div class="header-center">
+        <div class="motto">॥ જય માતાજી ॥</div>
+        <div class="school-title">ખંડેવાળ પ્રાથમિક શાળા</div>
+        <div class="app-subtitle">ગુજરાતી વાંચન-લેખન અને અર્થગ્રહણ (FLN)</div>
+      </div>
+
+      <div class="header-icon-box" title="મા સરસ્વતી">
+        <img src="1000729861.png" alt="મા સરસ્વતી">
+      </div>
+    </header>
+
+    <!-- નેવિગેશન બાર -->
+    <div class="nav-bar">
+      <button class="btn-3d btn-nav" id="btnGoHome">🏠 હોમ સ્ક્રીન</button>
+      <div style="font-weight: 800; font-size: 1rem; color: #4338ca;" id="navLevelTitle">મુખ્ય ડેશબોર્ડ</div>
+      <button class="btn-3d btn-skip" id="btnSkipNext">આગળ વધો ➔</button>
+    </div>
+
+    <!-- પ્રોગ્રેસ બાર -->
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- મુખ્ય બોડી એરિયા -->
+    <div class="main-body">
+
+      <!-- હોમ સ્ક્રીન -->
+      <div id="screenHome" class="desktop-home">
+        
+        <!-- વેલકમ બેનર (fln-icon.png સાથે સેટ કરેલ) -->
+        <div class="welcome-banner">
+          <div class="welcome-logo-badge">
+            <img src="fln-icon.png" alt="FLN લોગો">
+          </div>
+          <div class="welcome-text-box">
+            <h2>નમસ્તે બાળદોસ્તો! આવો, રમતા રમતા શીખીએ 🌟</h2>
+            <p>FLN મિશન • નિપુણ ભારત આધારિત ડિજિટલ શિક્ષણ પ્લેટફોર્મ</p>
+          </div>
+        </div>
+
+        <div class="home-top-row">
+          <button class="btn-3d hero-btn btn-hero-green" id="btnStartL1">
+            🚀 શરૂઆતથી શીખો (લેવલ ૧ થી)
+          </button>
+          <button class="btn-3d hero-btn btn-hero-blue" id="btnOpenLevels">
+            🎯 મારું મનપસંદ લેવલ પસંદ કરો
+          </button>
+        </div>
+
+        <!-- ૬ લેવલ્સની 3x2 ગ્રીડ -->
+        <div class="desktop-level-grid">
+          <div class="level-card-3d c-green" onclick="jumpToLevel(0)">
+            <div>
+              <h4>લેવલ ૧: મૂળાક્ષર ધ્વનિ</h4>
+              <p>ક થી જ્ઞ અને સ્વરોની સાઉન્ડ ઓળખ</p>
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 800; opacity: 0.9;">પ્રવેશ કરો ➔</div>
+          </div>
+
+          <div class="level-card-3d c-blue" onclick="jumpToLevel(1)">
+            <div>
+              <h4>લેવલ ૨: સાદા શબ્દો</h4>
+              <p>બે અને ત્રણ અક્ષરના સાદા શબ્દો</p>
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 800; opacity: 0.9;">પ્રવેશ કરો ➔</div>
+          </div>
+
+          <div class="level-card-3d c-orange" onclick="jumpToLevel(2)">
+            <div>
+              <h4>લેવલ ૩: માત્રાવાળા શબ્દો</h4>
+              <p>કાનો, હ્રસ્વ/દીર્ઘ ઇ-ઉ માત્રાઓ</p>
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 800; opacity: 0.9;">પ્રવેશ કરો ➔</div>
+          </div>
+
+          <div class="level-card-3d c-purple" onclick="jumpToLevel(3)">
+            <div>
+              <h4>લેવલ ૪: જોડાક્ષર અને વિશેષ</h4>
+              <p>એ, ઐ, ઓ, ઔ, અનુસ્વાર અને જોડાક્ષર</p>
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 800; opacity: 0.9;">પ્રવેશ કરો ➔</div>
+          </div>
+
+          <div class="level-card-3d c-rose" onclick="jumpToLevel(4)">
+            <div>
+              <h4>લેવલ ૫: વાક્ય નિર્માણ</h4>
+              <p>શબ્દો ક્રમમાં ગોઠવી વાક્ય બનાવો</p>
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 800; opacity: 0.9;">પ્રવેશ કરો ➔</div>
+          </div>
+
+          <div class="level-card-3d c-amber" onclick="jumpToLevel(5)">
+            <div>
+              <h4>લેવલ ૬: અર્થગ્રહણ (૪ ભાગ)</h4>
+              <p>ક્રમિક ફકરા વાંચી ૫ પ્રશ્નોના ઉત્તર</p>
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 800; opacity: 0.9;">પ્રવેશ કરો ➔</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- લેવલ ૧ થી ૫ ગેમ સ્ક્રીન -->
+      <div id="screenPlay" class="game-box hidden">
+        <div style="display: flex; justify-content: space-between; width: 100%; max-width: 650px; margin-bottom: 8px;">
+          <span style="font-size: 1rem; font-weight: 800; color: #4f46e5;" id="playSubTitle">લેવલ ૧</span>
+          <span style="font-size: 0.95rem; font-weight: 700; color: #64748b;" id="playCounter">૧ / ૧૫</span>
+        </div>
+
+        <button class="audio-play-btn" id="btnAudioPrompt" title="ઉચ્ચાર સાંભળો">🔊</button>
+        <div style="font-size: 1rem; color: #64748b; margin-bottom: 6px;" id="playInstruction">અવાજ સાંભળી સાચો અક્ષર પસંદ કરો:</div>
+
+        <div class="display-word-target" id="displayTarget">?</div>
+
+        <div class="word-drop-slots" id="slotsArea"></div>
+        <div class="letter-pool" id="poolArea"></div>
+
+        <div class="feedback-banner" id="playFeedback"></div>
+      </div>
+
+      <!-- લેવલ ૬ (અર્થગ્રહણ) -->
+      <div id="screenComprehension" class="game-box hidden" style="max-width: 800px;">
+        <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px;">
+          <span style="font-size: 1rem; font-weight: 800; color: #b45309;" id="compBadge">ભાગ ૧: નાનો ફકરો</span>
+          <span style="font-size: 0.95rem; font-weight: 700; color: #64748b;" id="compQuestionCounter">પ્રશ્ન ૧ / ૨</span>
+        </div>
+
+        <div class="passage-card">
+          <button class="passage-listen-btn" id="btnListenPassage">🔊 ફકરો સાંભળો</button>
+          <div id="passageDisplay"></div>
+        </div>
+
+        <div class="question-wrapper">
+          <div class="question-text" id="compQuestionText"></div>
+          <div class="options-stack" id="compOptionsStack"></div>
+        </div>
+
+        <div class="feedback-banner" id="compFeedback"></div>
+      </div>
+
+    </div>
+
+    <!-- અંગ્રેજી ફૂટર -->
+    <footer>
+      <div class="footer-line-1">
+        <span>🚀 Created & Developed by: <strong>Rakesh Prajapati</strong></span>
+        <span>|</span>
+        <span>📞 Contact: <a href="tel:+918140844248">+91 8140844248</a></span>
+      </div>
+      <div class="footer-line-2">
+        Khandeval Primary School, Taluka Kalol, Dist. Panchmahal | All Rights Reserved © 2026
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /* સુરક્ષા પ્રતિબંધો */
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12' || (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'i' || e.key === 'I'))) {
+        e.preventDefault();
+      }
+    });
+
+    /* PWA સર્વિસ વર્કર રજીસ્ટ્રેશન */
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+    /* ગુજરાતી સ્પીચ એન્જિન */
+    function playSpeech(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'gu-IN';
+        u.rate = 0.85;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    /* સંપૂર્ણ ડેટાબેંક */
+    const GAME_DATA = {
+      levels: [
+        {
+          id: 1,
+          name: "લેવલ ૧: મૂળાક્ષર ધ્વનિ",
+          type: "letter",
+          items: [
+            { text: "ક", options: ["ખ", "ક", "ગ", "ઘ"] },
+            { text: "મ", options: ["ન", "મ", "જ", "વ"] },
+            { text: "ગ", options: ["ગ", "ધ", "છ", "જ"] },
+            { text: "ર", options: ["સ", "ર", "શ", "ષ"] },
+            { text: "ન", options: ["ત", "ન", "લ", "વ"] },
+            { text: "વ", options: ["બ", "વ", "પ", "ક"] },
+            { text: "સ", options: ["શ", "ષ", "સ", "હ"] },
+            { text: "દ", options: ["દ", "ધ", "ઘ", "છ"] },
+            { text: "બ", options: ["વ", "બ", "પ", "ફ"] },
+            { text: "અ", options: ["આ", "અ", "ઇ", "ઉ"] },
+            { text: "છ", options: ["જ", "છ", "ઘ", "ધ"] },
+            { text: "પ", options: ["પ", "ય", "ષ", "ફ"] },
+            { text: "ડ", options: ["ડ", "ઢ", "દ", "ટ"] },
+            { text: "ત", options: ["ત", "ન", "ગ", "મ"] },
+            { text: "લ", options: ["લ", "ત", "વ", "બ"] }
+          ]
+        },
+        {
+          id: 2,
+          name: "લેવલ ૨: સાદા શબ્દો",
+          type: "word",
+          items: [
+            { word: "ઘર" }, { word: "રમ" }, { word: "જગ" }, { word: "પગ" },
+            { word: "વડ" }, { word: "બસ" }, { word: "કપ" }, { word: "નળ" },
+            { word: "કમળ" }, { word: "બતક" }, { word: "મગર" }, { word: "કલમ" },
+            { word: "ભગત" }, { word: "પવન" }, { word: "હરણ" }
+          ]
+        },
+        {
+          id: 3,
+          name: "લેવલ ૩: માત્રાવાળા શબ્દો",
+          type: "word",
+          items: [
+            { word: "કાતર" }, { word: "માટલી" }, { word: "ચકલી" }, { word: "હાથી" },
+            { word: "પાણી" }, { word: "ગુલાબ" }, { word: "સાબુ" }, { word: "સૂરજ" },
+            { word: "દૂધ" }, { word: "દાડમ" }, { word: "શિયાળ" }, { word: "વિમાન" },
+            { word: "કીડી" }, { word: "બારી" }, { word: "તુલસી" }
+          ]
+        },
+        {
+          id: 4,
+          name: "લેવલ ૪: જોડાક્ષર અને વિશેષ",
+          type: "word",
+          items: [
+            { word: "કેરી" }, { word: "મોર" }, { word: "પૈસા" }, { word: "સૈનિક" },
+            { word: "પોપટ" }, { word: "ઢોલ" }, { word: "પતંગ" }, { word: "સિંહ" },
+            { word: "પુસ્તક" }, { word: "મિત્ર" }, { word: "બચ્ચું" }, { word: "ચશ્મા" },
+            { word: "રસ્તો" }, { word: "ધ્વજ" }, { word: "ઈશ્વર" }
+          ]
+        },
+        {
+          id: 5,
+          name: "લેવલ ૫: વાક્ય નિર્માણ",
+          type: "sentence",
+          items: [
+            { s: "મને કેરી ભાવે છે", p: ["કેરી", "મને", "છે", "ભાવે"] },
+            { s: "મોર સુંદર નાચે છે", p: ["છે", "મોર", "નાચે", "સુંદર"] },
+            { s: "અમે શાળાએ જઈએ છીએ", p: ["જઈએ", "શાળાએ", "અમે", "છીએ"] },
+            { s: "ચકલી ચીં ચીં કરે છે", p: ["કરે", "ચીં", "ચકલી", "ચીં", "છે"] },
+            { s: "ગાય મીઠું દૂધ આપે છે", p: ["મીઠું", "આપે", "ગાય", "છે", "દૂધ"] },
+            { s: "કાગળની હોડી પાણીમાં તરે છે", p: ["હોડી", "પાણીમાં", "તરે", "કાગળની", "છે"] },
+            { s: "બગીચામાં રંગબેરંગી ફૂલો છે", p: ["ફૂલો", "છે", "બગીચામાં", "રંગબેરંગી"] },
+            { s: "સૂરજ પૂર્વ દિશામાં ઊગે છે", p: ["ઊગે", "દિશામાં", "સૂરજ", "છે", "પૂર્વ"] },
+            { s: "અમે મેદાનમાં કબડ્ડી રમીએ છીએ", p: ["મેદાનમાં", "છીએ", "કબડ્ડી", "અમે", "રમીએ"] },
+            { s: "વરસાદ પડે ત્યારે મોર ટહૂકે છે", p: ["ત્યારે", "વરસાદ", "ટહૂકે", "પડે", "છે", "મોર"] }
+          ]
+        },
+        {
+          id: 6,
+          name: "લેવલ ૬: અર્થગ્રહણ (૪ ભાગ)",
+          type: "comprehension",
+          sections: [
+            {
+              subName: "ભાગ ૧: નાનો ફકરો (૨ પ્રશ્નો)",
+              canAudio: true,
+              passage: "એક નાનો બગીચો હતો. તેમાં ગુલાબ અને મોગરાના સુંદર ફૂલો ખીલ્યા હતા. એક રંગબેરંગી પતંગિયું આવ્યું. પતંગિયું ફૂલ પર બેસીને રસ પીવા લાગ્યું.",
+              questions: [
+                { q: "બગીચામાં કયા ફૂલો ખીલ્યા હતા?", opts: ["કમળ અને ગલગોટો", "ગુલાબ અને મોગરા", "ચંપો અને ચમેલી"], ans: 1 },
+                { q: "ફૂલ પર બેસીને રસ કોણ પીવા લાગ્યું?", opts: ["ચકલી", "કાગડો", "પતંગિયું"], ans: 2 }
+              ]
+            },
+            {
+              subName: "ભાગ ૨: મધ્યમ ફકરો (૩ પ્રશ્નો)",
+              canAudio: true,
+              passage: "મીના અને કાનજી ગામના તળાવ કિનારે ગયા. તળાવમાં સફેદ બતકો તરતા હતા. કાનજીએ એક કાગળની સુંદર હોડી બનાવી અને પાણીમાં મૂકી. મંદ મંદ પવન વાતો હતો એટલે હોડી સરસર તરવા લાગી. બંને બાળકો ખુશ થઈને તાળીઓ પાડવા લાગ્યા.",
+              questions: [
+                { q: "બાળકો ક્યાં ગયા હતા?", opts: ["બગીચામાં", "તળાવ કિનારે", "શાળાના મેદાનમાં"], ans: 1 },
+                { q: "કાનજીએ શાની હોડી બનાવી?", opts: ["પ્લાસ્ટિકની", "પાંદડાની", "કાગળની"], ans: 2 },
+                { q: "હોડી શા માટે સરસર તરવા લાગી?", opts: ["મંદ મંદ પવન વાતો હતો", "પાણી ઊંડું હતું", "બતક દોડતું હતું"], ans: 0 }
+              ]
+            },
+            {
+              subName: "ભાગ ૩: વિસ્તૃત ફકરો (૪ પ્રશ્નો)",
+              canAudio: true,
+              passage: "એક જંગલની ધાર પર ભોળાભાઈ નામના ખેડૂતનું ખેતર હતું. તેઓ રોજ સવારે ગાય અને બળદને ચરાવવા સીમમાં લઈ જતા. એક દિવસ સાંજે અચાનક આકાશમાં કાળા ડિબાંગ વાદળો ઘેરાયા અને વીજળી ચમકવા લાગી. ભોળાભાઈએ પશુઓને તાબડતોબ વાળ્યા અને ઘર તરફ દોટ મૂકી. તેઓ ઘર પહોંચ્યા કે તરત જ મુશળધાર વરસાદ તૂટી પડ્યો. પશુઓ સલામત કોઢમાં બંધાઈ ગયા એટલે ભોળાભાઈએ ઈશ્વરનો આભાર માન્યો.",
+              questions: [
+                { q: "ખેડૂતનું નામ શું હતું?", opts: ["રામજીભાઈ", "ભોળાભાઈ", "કાનજીભાઈ"], ans: 1 },
+                { q: "આકાશમાં ક્યારે કાળા વાદળો ઘેરાયા?", opts: ["બપોરે", "સવારે", "સાંજે"], ans: 2 },
+                { q: "ભોળાભાઈએ ઘર તરફ દોટ કેમ મૂકી?", opts: ["ભૂખ લાગી હતી", "વરસાદ આવવાનો હતો", "રાત થઈ ગઈ હતી"], ans: 1 },
+                { q: "પશુઓને ક્યાં બાંધવામાં આવ્યા હતા?", opts: ["કોઢમાં", "ખેતરમાં", "વૃક્ષ નીચે"], ans: 0 }
+              ]
+            },
+            {
+              subName: "ભાગ ૪: મોટો ફકરો (૫ ઊંડાણપૂર્વકના પ્રશ્નો)",
+              canAudio: false,
+              passage: "અમારા ગામના પાદરે એક સો વર્ષ જૂનું વિશાળ વડનું ઝાડ આવેલું છે. તેની લાંબી વડવાઈઓ જમીનને અડીને હિંચકા જેવી બની ગઈ છે. વડના છાંયડામાં ગામના વડીલો બપોરે બેસીને વાતો કરે છે અને બાળકો લપસણી તેમજ હિંચકા ખાય છે. આ વડના વૃક્ષ પર અગણિત પોપટ, કાબર, કાગડા અને ખિસકોલીઓ રહે છે. ચોમાસામાં જ્યારે લાલ લાલ ટેટા પાકે છે ત્યારે આખું ઝાડ પંખીઓના મીઠા કલરવથી ગાજી ઊઠે છે. ગામના લોકો વડને પવિત્ર માને છે અને કોઈ પણ વ્યક્તિ તેની એક પણ ડાળખી કાપતું નથી. વડ આપણને શીખવે છે કે જેમ તે સૌને આશરો આપે છે તેમ આપણે પણ હંમેશાં જરૂરિયાતમંદોને મદદ કરવી જોઈએ.",
+              questions: [
+                { q: "ગામના પાદરે શાનું જૂનું વૃક્ષ આવેલું છે?", opts: ["પીપળાનું", "વડનું", "લીમડાનું"], ans: 1 },
+                { q: "વડના ઝાડ પર ક્યારે લાલ ટેટા પાકે છે?", opts: ["ઉનાળામાં", "શિયાળામાં", "ચોમાસામાં"], ans: 2 },
+                { q: "ગામના લોકો વડની ડાળખી કેમ નથી કાપતા?", opts: ["તેઓ વડને પવિત્ર માને છે", "વડ ખૂબ ઊંચો છે", "કાંટાળો છે"], ans: 0 },
+                { q: "ફકરામાં 'મીઠા અવાજ' માટે કયો શબ્દ વપરાયો છે?", opts: ["કલરવ", "વડવાઈ", "હિંચકા"], ans: 0 },
+                { q: "આ વાર્તા/ફકરામાંથી મુખ્ય કયો બોધ મળે છે?", opts: ["ઝાડ પર ચડવું", "સૌને આશરો અને મદદ આપવી", "હિંચકા ખાવા"], ans: 1 }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    /* નેવિગેશન & લોજિક */
+    let currentLvl = 0;
+    let currentItem = 0;
+    let builtParts = [];
+    let compSecIdx = 0;
+    let compQIdx = 0;
+
+    const screenHome = document.getElementById('screenHome');
+    const screenPlay = document.getElementById('screenPlay');
+    const screenComp = document.getElementById('screenComprehension');
+    const navLevelTitle = document.getElementById('navLevelTitle');
+    const progressFill = document.getElementById('progressFill');
+
+    function showScreen(s) {
+      [screenHome, screenPlay, screenComp].forEach(el => el.classList.add('hidden'));
+      s.classList.remove('hidden');
+    }
+
+    document.getElementById('btnGoHome').onclick = () => {
+      showScreen(screenHome);
+      navLevelTitle.textContent = "મુખ્ય ડેશબોર્ડ";
+      progressFill.style.width = "0%";
+    };
+
+    document.getElementById('btnStartL1').onclick = () => jumpToLevel(0);
+    document.getElementById('btnOpenLevels').onclick = () => {
+      const el = document.querySelector('.desktop-level-grid');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    document.getElementById('btnSkipNext').onclick = () => {
+      if (currentLvl < GAME_DATA.levels.length - 1) {
+        jumpToLevel(currentLvl + 1);
+      } else {
+        alert("અભિનંદન! તમે બધા જ લેવલ પૂર્ણ કર્યા છે!");
+        showScreen(screenHome);
+      }
+    };
+
+    function jumpToLevel(idx) {
+      currentLvl = idx;
+      currentItem = 0;
+      compSecIdx = 0;
+      compQIdx = 0;
+      const lvl = GAME_DATA.levels[currentLvl];
+      navLevelTitle.textContent = lvl.name.split(':')[0];
+
+      if (lvl.type === 'comprehension') {
+        showScreen(screenComp);
+        renderComprehension();
+      } else {
+        showScreen(screenPlay);
+        renderPlayItem();
+      }
+    }
+
+    function renderPlayItem() {
+      const lvl = GAME_DATA.levels[currentLvl];
+      const item = lvl.items[currentItem];
+      builtParts = [];
+
+      document.getElementById('playSubTitle').textContent = lvl.name;
+      document.getElementById('playCounter').textContent = `${currentItem + 1} / ${lvl.items.length}`;
+      progressFill.style.width = `${((currentItem) / lvl.items.length) * 100}%`;
+
+      const target = document.getElementById('displayTarget');
+      const slots = document.getElementById('slotsArea');
+      const pool = document.getElementById('poolArea');
+      const feedback = document.getElementById('playFeedback');
+      const instr = document.getElementById('playInstruction');
+
+      slots.innerHTML = '';
+      pool.innerHTML = '';
+      feedback.textContent = '';
+      feedback.style.color = '';
+
+      if (lvl.type === 'letter') {
+        instr.textContent = "અવાજ સાંભળી સાચો અક્ષર પસંદ કરો:";
+        target.textContent = "?";
+        document.getElementById('btnAudioPrompt').onclick = () => playSpeech(item.text);
+        playSpeech(item.text);
+
+        item.options.forEach(ch => {
+          const btn = document.createElement('button');
+          btn.className = 'letter-3d-btn';
+          btn.textContent = ch;
+          btn.onclick = () => {
+            playSpeech(ch);
+            if (ch === item.text) {
+              btn.style.background = '#dcfce7';
+              target.textContent = item.text;
+              feedback.textContent = "શાબાશ! સાચો ઉત્તર! 👏";
+              feedback.style.color = "#16a34a";
+              setTimeout(nextPlayStep, 800);
+            } else {
+              btn.style.background = '#fee2e2';
+              feedback.textContent = "ફરી પ્રયત્ન કરો!";
+              feedback.style.color = "#dc2626";
+            }
+          };
+          pool.appendChild(btn);
+        });
+
+      } else if (lvl.type === 'word') {
+        instr.textContent = "અક્ષરો સાચા ક્રમમાં જોડી શબ્દ બનાવો:";
+        target.textContent = item.word;
+        document.getElementById('btnAudioPrompt').onclick = () => playSpeech(item.word);
+        playSpeech(item.word);
+
+        const chars = Array.from(item.word);
+        chars.forEach(() => {
+          const s = document.createElement('div');
+          s.className = 'slot-box';
+          slots.appendChild(s);
+        });
+
+        const shuffled = [...chars].sort(() => Math.random() - 0.5);
+        shuffled.forEach(ch => {
+          const btn = document.createElement('button');
+          btn.className = 'letter-3d-btn';
+          btn.textContent = ch;
+          btn.onclick = () => {
+            playSpeech(ch);
+            if (builtParts.length < chars.length) {
+              slots.children[builtParts.length].textContent = ch;
+              builtParts.push(ch);
+              btn.classList.add('disabled');
+
+              if (builtParts.length === chars.length) {
+                if (builtParts.join('') === item.word) {
+                  feedback.textContent = "ઉત્તમ! સાચો શબ્દ બન્યો! 🌟";
+                  feedback.style.color = "#16a34a";
+                  playSpeech(item.word);
+                  setTimeout(nextPlayStep, 1000);
+                } else {
+                  feedback.textContent = "ખોટો ક્રમ! ફરી ગોઠવો.";
+                  feedback.style.color = "#dc2626";
+                  setTimeout(() => {
+                    builtParts = [];
+                    Array.from(slots.children).forEach(s => s.textContent = '');
+                    Array.from(pool.children).forEach(b => b.classList.remove('disabled'));
+                    feedback.textContent = '';
+                  }, 1000);
+                }
+              }
+            }
+          };
+          pool.appendChild(btn);
+        });
+
+      } else if (lvl.type === 'sentence') {
+        instr.textContent = "શબ્દો યોગ્ય ક્રમમાં ગોઠવી વાક્ય બનાવો:";
+        target.textContent = "";
+        target.style.fontSize = "1.6rem";
+        document.getElementById('btnAudioPrompt').onclick = () => playSpeech(item.s);
+        playSpeech(item.s);
+
+        const targetWords = item.s.split(' ');
+        const shuffledParts = [...item.p].sort(() => Math.random() - 0.5);
+
+        shuffledParts.forEach(w => {
+          const btn = document.createElement('button');
+          btn.className = 'sentence-btn';
+          btn.textContent = w;
+          btn.onclick = () => {
+            playSpeech(w);
+            builtParts.push(w);
+            target.textContent = builtParts.join(' ');
+            btn.style.display = 'none';
+
+            if (builtParts.length === targetWords.length) {
+              if (builtParts.join(' ') === item.s) {
+                feedback.textContent = "અદ્ભુત! અર્થપૂર્ણ વાક્ય બન્યું! 🎯";
+                feedback.style.color = "#16a34a";
+                playSpeech(item.s);
+                setTimeout(nextPlayStep, 1100);
+              } else {
+                feedback.textContent = "વાક્ય રચના ખોટી છે, ફરીથી બનાવો.";
+                feedback.style.color = "#dc2626";
+                setTimeout(renderPlayItem, 1100);
+              }
+            }
+          };
+          pool.appendChild(btn);
+        });
+      }
+    }
+
+    function nextPlayStep() {
+      const lvl = GAME_DATA.levels[currentLvl];
+      currentItem++;
+      if (currentItem < lvl.items.length) {
+        renderPlayItem();
+      } else {
+        alert(`અભિનંદન! તમે ${lvl.name} પૂરું કર્યું છે! 🎉`);
+        if (currentLvl < GAME_DATA.levels.length - 1) {
+          jumpToLevel(currentLvl + 1);
+        } else {
+          showScreen(screenHome);
+        }
+      }
+    }
+
+    function renderComprehension() {
+      const lvl = GAME_DATA.levels[5];
+      const sec = lvl.sections[compSecIdx];
+      const q = sec.questions[compQIdx];
+
+      document.getElementById('compBadge').textContent = sec.subName;
+      document.getElementById('compQuestionCounter').textContent = `પ્રશ્ન ${compQIdx + 1} / ${sec.questions.length}`;
+
+      const totalQ = lvl.sections.reduce((a, b) => a + b.questions.length, 0);
+      let passedQ = 0;
+      for (let i = 0; i < compSecIdx; i++) passedQ += lvl.sections[i].questions.length;
+      passedQ += compQIdx;
+      progressFill.style.width = `${(passedQ / totalQ) * 100}%`;
+
+      document.getElementById('passageDisplay').textContent = sec.passage;
+      const audioBtn = document.getElementById('btnListenPassage');
+
+      if (sec.canAudio) {
+        audioBtn.style.display = "inline-block";
+        audioBtn.onclick = () => playSpeech(sec.passage);
+      } else {
+        audioBtn.style.display = "none";
+      }
+
+      document.getElementById('compQuestionText').textContent = `${compQIdx + 1}. ${q.q}`;
+      const stack = document.getElementById('compOptionsStack');
+      const feedback = document.getElementById('compFeedback');
+      stack.innerHTML = '';
+      feedback.textContent = '';
+
+      q.opts.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-3d-btn';
+        btn.textContent = `${['(A)', '(B)', '(C)'][idx]} ${opt}`;
+        btn.onclick = () => {
+          playSpeech(opt);
+          if (idx === q.ans) {
+            btn.classList.add('correct');
+            feedback.textContent = "ખૂબ સરસ! સાચો ઉત્તર છે! 🌟";
+            feedback.style.color = "#16a34a";
+            setTimeout(nextCompStep, 900);
+          } else {
+            btn.classList.add('wrong');
+            feedback.textContent = "ખોટો ઉત્તર, ફકરો ફરીથી વાંચી સાચો જવાબ શોધો.";
+            feedback.style.color = "#dc2626";
+          }
+        };
+        stack.appendChild(btn);
+      });
+    }
+
+    function nextCompStep() {
+      const lvl = GAME_DATA.levels[5];
+      const sec = lvl.sections[compSecIdx];
+
+      compQIdx++;
+      if (compQIdx < sec.questions.length) {
+        renderComprehension();
+      } else {
+        compSecIdx++;
+        compQIdx = 0;
+        if (compSecIdx < lvl.sections.length) {
+          alert(`શાબાશ! તમે ${sec.subName} સફળતાપૂર્વક પૂર્ણ કર્યો! હવે આગળનો ભાગ આવશે.`);
+          renderComprehension();
+        } else {
+          alert("અદ્ભુત સિદ્ધિ! તમે અર્થગ્રહણના તમામ ૪ ભાગ સફળતાપૂર્વક પૂર્ણ કર્યા છે! 🏆🎉");
+          showScreen(screenHome);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
